@@ -1,13 +1,19 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: dashboard-ingress
-  namespace: kubernetes-dashboard
+  name: name
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
 spec:
+  tls:
+  - hosts:
+    - myapp.com
+    secretName: myapp-secret-tls
   rules:
-  - host: dashboard.com
-    http:
-      paths:
-      - backend:
-        serviceName: dashboard-kubernetes
-        servicePort: 80
+    - host: app.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: my-service
+              servicePort: 8080
